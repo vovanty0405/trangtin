@@ -7,7 +7,9 @@ var BaiViet = require('../models/baiviet');
 // GET: Trang chủ
 router.get('/', async (req, res) => {
 	// Lấy chuyên mục hiển thị vào menu
-var cm = await ChuDe. find () ;
+	var cm = await ChuDe.find()
+	.sort({ TenChuDe: 1 })
+	.exec() ;
 
 // Lấy 12 bài viết mới nhất
 	var bv = await BaiViet.find ({ KiemDuyet: 1 })
@@ -57,7 +59,7 @@ router.get('/baiviet/chude/:id', async (req, res) => {
 		.limit (3) .exec () ;
 
 		res.render ('baiviet_chude', {
-		title: 'Bài viết cùng chuyên mục',
+		title: 'Bài viết cùng chuyên mục: ' + cd.TenChuDe,
 		chuyenmuc: cm,
 		chude: cd,
 		baiviet: bv,
@@ -68,7 +70,7 @@ router.get('/baiviet/chude/:id', async (req, res) => {
 
 // GET: Xem bài viết
 router.get('/baiviet/chitiet/:id', async (req, res) => {
-				var id = req.params.id;
+		var id = req.params.id;
 
 		// Lấy chuyên mục hiển thị vào menu
 		var cm = await ChuDe. find () ;
